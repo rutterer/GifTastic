@@ -51,12 +51,17 @@ function renderButtons() {
     
               // Creating and storing a div tag
               var topicDiv = $("<div>");
+              
+              
     
               // Creating a paragraph tag with the result item's rating
               var p = $("<p>").text("Rating: " + results[i].rating);
     
               // Creating and storing an image tag
               var topicImage = $("<img>");
+
+              //Adding a class to the image for click-ability
+              topicImage.addClass("gif");
               // Setting the src attribute of the image to a property pulled off the result item
               topicImage.attr("src", results[i].images.fixed_height_still.url);
     
@@ -67,10 +72,19 @@ function renderButtons() {
               // Prependng the topicDiv to the HTML page in the "#gifs-appear-here" div
               $("#gifs").prepend(topicDiv);
             }
+         
+          $(".gif").on("click", function() { 
+            
+            alert("Gif clicked!")
+            });
+         
           });
       }); 
 
 }
+
+
+
 
   /* Calling the function to render buttons */
   renderButtons();
