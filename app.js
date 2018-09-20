@@ -62,26 +62,50 @@ function renderButtons() {
 
               //Adding a class to the image for click-ability
               topicImage.addClass("gif");
+              // Adding a "data-state" attribute and setting to still for next on-click functionality
+
+              topicImage.attr("data-state", "still")
               // Setting the src attribute of the image to a property pulled off the result item
+
+              topicImage.attr("animated-url", results[i].images.fixed_height.url);
+              
               topicImage.attr("src", results[i].images.fixed_height_still.url);
     
               // Appending the paragraph and image tag to the topicDiv
               topicDiv.append(p);
               topicDiv.append(topicImage);
     
-              // Prependng the topicDiv to the HTML page in the "#gifs-appear-here" div
+              // Prependng the topicDiv to the HTML page in the "#gifs" div
               $("#gifs").prepend(topicDiv);
             }
          
           $(".gif").on("click", function() { 
-            
-            alert("Gif clicked!")
-            });
+            var state = $(this).attr("data-state");
+      // If the clicked image's state is still, update its src attribute to what its data-animate value is.
+      // Then, set the image's data-state to animate
+      // Else set src to the data-still value
+          if (state === "still") {
+            var temp = $(this).attr("src")
+             $(this).attr("src", $(this).attr("animated-url"));
+             $(this).attr("data-state", "animate");
+             $(this).attr("animated-url", temp);
+          } else {
+            var temp = $(this).attr("src")
+             $(this).attr("src", $(this).attr("animated-url"));
+             $(this).attr("data-state", "still");
+             $(this).attr("animated-url", temp);
+          };
+
+            alert("Gif clicked!");
+          
+          
+           
+          });
          
           });
       }); 
 
-}
+};
 
 
 
@@ -91,8 +115,7 @@ function renderButtons() {
 
 
  
-
-     // This function allows us to add new topics.
+  // This function allows us to add new topics.
      $("#add-topic").on("click", function(event) {
         event.preventDefault();
         // This line grabs the input from the textbox
@@ -103,5 +126,5 @@ function renderButtons() {
     
         // Calling renderButtons which handles the processing of our topics array
         renderButtons();
-      });
-
+     });
+    
